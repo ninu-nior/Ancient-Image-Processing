@@ -25,9 +25,11 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 
 # Set the TESSDATA_PREFIX
 import os
-os.environ["TESSDATA_PREFIX"] = r"C:\Program Files\Tesseract-OCR\tessdata"
-image = cv2.imread("C:/Users/Nehal/Desktop/Ancient_text/Image_Pipeline/final_output/output.png")
-# Now run OCR
-text = pytesseract.image_to_string(image, lang="san")
+def get_sanskrit(impath):
+    os.environ["TESSDATA_PREFIX"] = r"C:\Program Files\Tesseract-OCR\tessdata"
+    image = cv2.imread(impath)
+    # Now run OCR
+    text = pytesseract.image_to_string(image, lang="san")
 
-print(text)
+    print(text)
+    return text

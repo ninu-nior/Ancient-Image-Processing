@@ -1,7 +1,13 @@
 import os
 from langchain_groq import ChatGroq
+import re
 
-def get_response(content):
+
+def remove_think_tags(text):
+    """Removes everything between <think> and </think> tags, including the tags themselves."""
+    cleaned_text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
+    return cleaned_text.strip()
+def get_response(content,lang):
     llm = ChatGroq(
         model="deepseek-r1-distill-llama-70b",
         groq_api_key="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",
@@ -9,17 +15,14 @@ def get_response(content):
     )
     
     prompt = f'''
-    I have an OCR-extracted text from a Sanskrit/tamil scripture, but the text appears somewhat distorted. Based on what you can interpret, can you try to reconstruct a meaningful passage?  
-    Feel free to make assumptions where necessary and provide an explanation in a story-like manner.  
-    If possible, extract themes, figures, or philosophical concepts that might be present in the text and explain their significance. The goal is to understand the possible message or wisdom conveyed in this scripture fragment.  
-
-    Here is the text:  
+    You are given an OCR-extracted {lang} text that is distorted. Your task is to reconstruct a meaningful passage, making reasonable assumptions where necessary., explain it in a detailed storylike way, Extract key themes, figures, and philosophical concepts, then explain their significance. Ensure the response strictly contains the reconstructed interpretation and analysis, without any additional explanations of your thought process
     {content}
     '''
 
     response = llm.invoke(prompt)
     print(response.content)
-    return response.content# Print the response directly
+    cleaned=remove_think_tags(response.content)
+    return cleaned# Print the response directly
 
 # Example usage:
 # get_response('''||स रिदी र२४.८६०२८०य.न ठ न7प्-ऋवितनिनिः( १ २९३ से

@@ -12,7 +12,7 @@ def unsharp_masking(img):
     sharpened = cv2.addWeighted(img, 1.5, gaussian, -0.5, 0)
 
     # cv2.imwrite("final_sharpened.png", sharpened)
-    kernel = np.ones((2,2), np.uint8)  # Adjust kernel size
+    kernel = np.ones((2,2), np.uint8)  
     morph = cv2.morphologyEx(sharpened, cv2.MORPH_CLOSE, kernel)
     return morph
 # cv2.imwrite("final_morphed.png", morph)

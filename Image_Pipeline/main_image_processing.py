@@ -8,6 +8,8 @@ from sharpening_and_morphing import unsharp_masking
 from ocr_specific import ocr_specifics1
 from esrgan2 import upscale_image
 
+def median_filtering(image, kernel_size=3):
+    return cv2.medianBlur(image, kernel_size)
 def main_func(input_path):
     input_image = cv2.imread(input_path, cv2.IMREAD_GRAYSCALE)
     print("converted to grayscale")
@@ -40,14 +42,18 @@ def main_func(input_path):
     cv2.imwrite('Step_outputs/7_unsharp_masking_output.png', unsharp_masking_output)
     print("unsharp masking done")
     
+    median_filtered_output = median_filtering(unsharp_masking_output)
+    cv2.imwrite('Step_outputs/8_median_filtered_output.png', median_filtered_output)
+    print("Median filtering done")
+    
     # ocr_specifics= ocr_specifics1(unsharp_masking_output)
     # cv2.imwrite('Step_outputs/8_ocr_specifics.png', ocr_specifics)
     # print("ocr specifics done")
     
-    final_op_path=upscale_image('Step_outputs/7_unsharp_masking_output.png',"final_output/output.png")
+    final_op_path=upscale_image('Step_outputs/8_median_filtered_output.png',"final_output/output.png")
     
     print("final output saved")
     return final_op_path
     
 # main()
-main_func("C:/Users/Nehal/Desktop/Ancient_text/input_3.png")
+#main_func("C:/Users/Nehal/Desktop/Ancient_text/input_3.png")

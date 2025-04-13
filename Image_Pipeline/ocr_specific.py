@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # Load the image
-img = cv2.imread("final_morphed.png", cv2.IMREAD_GRAYSCALE)
+# img = cv2.imread("final_morphed.png", cv2.IMREAD_GRAYSCALE)
 def ocr_specifics1(img):
 # Apply a morphological closing operation to reconnect strokes
     kernel = np.ones((2, 1), np.uint8)  # Small kernel to avoid over-thickening
